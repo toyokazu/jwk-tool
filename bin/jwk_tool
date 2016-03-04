@@ -62,8 +62,8 @@ class JwkTool
     # create JSON Web Key (public) for sender
     jwk_pub = JSON::JWK.new(ssl_pkey.public_key)
     begin
-      open(pubkey_file, "w") {|f| f.write(jwk_pub)}
-      open(privkey_file, "w") {|f| f.write(jwk)}
+      open(pubkey_file, "w") {|f| f.write(jwk_pub.to_json)}
+      open(privkey_file, "w") {|f| f.write(jwk.to_json)}
     rescue => e
       $stderr.puts "#{e.class}, #{e.message}"
     end
