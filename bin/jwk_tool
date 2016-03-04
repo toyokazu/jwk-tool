@@ -1,0 +1,74 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+require 'rubygems' unless defined?(gem)
+#here = File.dirname(__FILE__)
+#$LOAD_PATH << File.expand_path(File.join(here, '..', 'lib'))
+require 'json/jwt'
+require 'optparse'
+
+class JwkTool
+  attr_accessor :options
+
+  def output_usage_and_exit(parser = @parser)
+    $stderr.puts parser
+    exit
+  end
+
+  def initialize(argv, options = {})
+    @argv = argv
+    @options = options
+    if @argv.size < 1
+      @argv << "-h"
+    end
+    parse!
+  end
+
+  def parser
+    @parser ||= OptionParser.new do |opts|
+      opts.banner = "Usage: #{$0} [options]"
+      opts.separator ""
+      opts.separator "options:"
+      opts.on("-g", "--generate", "Generate key pairs as file.") { |v| options[:command] = :generate }
+      opts.on("-k", "--key=file", String, "Specify private key file name.", "Default: priv_key") { |v| options[:key] = v }
+      opts.separator ""
+      opts.on("-h", "--help", "Show this help message.") { output_usage_and_exit(opts) }
+    end
+  end
+
+  def parse!
+    parser.parse!(@argv)
+  end
+
+  def run!
+    case options[:command]
+    when :generate
+      generate
+    else
+      output_usage_and_exit
+    end
+  end
+
+  def generate
+    if options[:key].nil?
+      $stderr.puts "-g, --generate option requires -k, --key to specify key file name"
+      exit
+    end
+    privkey_file = options[:key]
+    pubkey_file = "#{options[:key]}.pub"
+    # generate RSA key pair
+    ssl_pkey = OpenSSL::PKey::RSA.new(2048)
+    # create JSON Web Key (private) for receiver
+    jwk = JSON::JWK.new(ssl_pkey)
+    # create JSON Web Key (public) for sender
+    jwk_pub = JSON::JWK.new(ssl_pkey.public_key)
+    begin
+      open(pubkey_file, "w") {|f| f.write(jwk_pub)}
+      open(privkey_file, "w") {|f| f.write(jwk)}
+    rescue => e
+      $stderr.puts "#{e.class}, #{e.message}"
+    end
+  end
+end
+
+jwk_tool = JwkTool.new(ARGV)
+jwk_tool.run!
