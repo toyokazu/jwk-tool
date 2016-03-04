@@ -20,7 +20,7 @@ An encryption example at sender node using public key.
 ```ruby
 require 'json/jwk'
 # read public key from file
-jwk_pub = JSON::JWK.new(JSON.parse(open('hoge.pub').read))
+jwk_pub = JSON::JWK.new(JSON.parse(open('key.pub').read))
 # encrypt plain text "hogehogefoofoo"
 jwe = JSON::JWE.new("hogehogefoofoo")
 # choose block cipher algorithm
@@ -38,7 +38,7 @@ A decryption example at receiver node using private key.
 ```ruby
 require 'json/jwk'
 # read private key from file
-jwk = JSON::JWK.new(JSON.parse(open('hoge').read))
+jwk = JSON::JWK.new(JSON.parse(open('key').read))
 # decrypt JSON format cipher data
 jwe_dec = JSON::JWE.decode_json_serialized(JSON.parse(json), jwk.to_key)
 # obtain the original plain text

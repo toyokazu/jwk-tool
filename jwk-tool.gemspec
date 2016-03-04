@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name          = "jwk-tool"
-  gem.version       = "0.0.4"
+  gem.version       = "0.0.5"
 
   gem.authors       = ["Toyokazu Akiyama"]
   gem.email         = ["toyokazu@gmail.com"]
