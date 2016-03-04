@@ -36,6 +36,7 @@ json = jwe.as_json.to_json
 A decryption example at receiver node using private key.
 
 ```ruby
+require 'json/jwk'
 # read private key from file
 jwk = JSON::JWK.new(JSON.parse(open('hoge').read))
 # decrypt JSON format cipher data
