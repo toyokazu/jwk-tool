@@ -1,23 +1,24 @@
-Gem::Specification.new do |gem|
-  gem.name          = "jwk-tool"
-  gem.version       = "0.0.5"
+Gem::Specification.new do |spec|
+  spec.name          = "jwk-tool"
+  spec.version       = "0.0.6"
 
-  gem.authors       = ["Toyokazu Akiyama"]
-  gem.email         = ["toyokazu@gmail.com"]
-  gem.description   = %q{Command line tools for operating JSON Web Key}
-  gem.summary       = %q{Command line tools for operating JSON Web Key}
-  gem.homepage      = "https://github.com/toyokazu/jwk-tool"
+  spec.authors       = ["Toyokazu Akiyama"]
+  spec.email         = ["toyokazu@gmail.com"]
+  spec.description   = %q{Command line tools for operating JSON Web Key}
+  spec.summary       = %q{Command line tools for operating JSON Web Key}
+  spec.homepage      = "https://github.com/toyokazu/jwk-tool"
 
-  gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.require_paths = ["lib"]
-  gem.has_rdoc = false
-  gem.license = "MIT"
+  spec.files         = `git ls-files`.split($\)
+  spec.executables   = spec.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+  spec.has_rdoc = false
+  spec.license = "MIT"
 
-  gem.required_ruby_version = '>= 1.9.3'
+  spec.required_ruby_version = '>= 1.9.3'
 
-  gem.add_runtime_dependency("json-jwt", [">= 1.5.2"])
+  spec.add_runtime_dependency("json-jwt", [">= 1.5.2"])
 
-  gem.add_development_dependency("rake", [">= 0.9.2"])
+  spec.add_development_dependency "bundler", "~> 1.10"
+  spec.add_development_dependency "rake", "~> 10.0"
 end

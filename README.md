@@ -18,7 +18,7 @@ To use the keys as JSON Web Key (JSON::JWK) defined in json-jwk, just read files
 An encryption example at sender node using public key.
 
 ```ruby
-require 'json/jwk'
+require 'json/jwt'
 # read public key from file
 jwk_pub = JSON::JWK.new(JSON.parse(open('key.pub').read))
 # encrypt plain text "hogehogefoofoo"
@@ -36,7 +36,7 @@ json = jwe.as_json.to_json
 A decryption example at receiver node using private key.
 
 ```ruby
-require 'json/jwk'
+require 'json/jwt'
 # read private key from file
 jwk = JSON::JWK.new(JSON.parse(open('key').read))
 # decrypt JSON format cipher data
